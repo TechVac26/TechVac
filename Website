@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechVac | Soluções em Climatização</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-blue: #00b4ff;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+        }
+
+        * {margin: 0; padding: 0; box-sizing: border-box;
+           font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;}
+
+        body{background-color: var(--dark-bg); color: var(--text-white);
+             line-height: 1.6;}
+        header{
+            padding:20px 5%; display:flex; justify-content:space-between;
+            align-items:center; border-bottom:1px solid #333;
+            background:rgba(0,0,0,.8); position:sticky; top:0; z-index:1000;}
+        .logo{font-size:1.5rem;font-weight:bold;color:var(--primary-blue);}
+        .contact-info i{color:var(--primary-blue);margin-right:10px;}
+
+        .container{max-width:1100px;margin:auto;padding:40px 20px;}
+        .hero{
+            text-align:center;padding:80px 20px;
+            background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+                url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size:cover;border-radius:20px;margin-bottom:50px;}
+        .hero-logo{
+            text-align:center;font-size:1.8rem;color:var(--primary-blue);
+            font-weight:bold;margin-bottom:15px;}
+        .hero h1{font-size:3.5rem;margin-bottom:20px;color:var(--primary-blue);}
+
+        /* Cards de Ferramentas */
+        .grid-tools{
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:30px;}
+        .card{
+            background:var(--card-bg);padding:30px;border-radius:15px;
+            border:1px solid #333;transition:transform .3s;}
+        .card:hover{transform:translateY(-5px);
+                     border-color:var(--primary-blue);}
+        label{display:block;margin-top:15px;margin-bottom:5px;color:var(--text-gray);}
+        input,select{
+            width:100%;padding:12px;margin-bottom:10px;border-radius:8px;
+            border:1px solid #444;background:#222;color:white;}
+        button{
+            width:100%;padding:15px;background:var(--primary-blue);
+            border:none;border-radius:8px;color:white;font-weight:bold;
+            cursor:pointer;margin-top:10px;transition:.3s;}
+        button:hover{background:#008ec0;}
+
+        .result-box{
+            margin-top:20px;padding:15px;background:rgba(0,180,255,.1);
+            border-radius:8px;border:1px dashed var(--primary-blue);
+            text-align:center;font-size:1.2rem;}
+        footer{text-align:center;padding:40px;background:#000;
+               margin-top:50px;border-top:1px solid #333;}
+        .whatsapp-btn{
+            background:#25d366;text-decoration:none;padding:10px 20px;
+            border-radius:50px;color:white;display:inline-block;margin-top:10px;}
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="logo">TECHVAC</div>
+    <div class="contact-info">
+        <span><i class="fas fa-envelope"></i> techvac.pt@gmail.com</span> |
+        <span><i class="fab fa-whatsapp"></i> 937979193</span>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Seção Hero -->
+    <section class="hero">
+        <div class="hero-logo"><i class="fas fa-tools"></i> TechVac</div>
+        <h1>Soluções em Climatização</h1>
+        <p>Instalação e manutenção de ar condicionado com qualidade e precisão.</p>
+    </section>
+
+    <!-- Cartões das Ferramentas -->
+    <div class="grid-tools">
+
+        <!-- Calculadora de Pré-Orçamento -->
+        <div class="card">
+            <h3><i class="fas fa-calculator"></i> Pré‑Orçamento</h3>
+            <p style="color:var(--text-gray);font-size:.9rem;">
+                Tenha uma estimativa rápida do valor da instalação.
+            </p>
+
+            <!-- METROS DE TUBAGEM (máx 25, 2 dígitos) -->
+            <label for="metros">Metros de tubagem:</label>
+            <input type="text" id="metros"
+                   placeholder="Ex: 5"
+                   inputmode="numeric"
+                   maxlength="2"
+                   pattern="\d{1,2}"
+                   autocomplete="off">
+
+            <label for="btus">Capacidade (BTUs):</label>
+            <input type="number" id="btus" placeholder="Ex: 9000">
+
+            <button onclick="calcularOrcamento()">Calcular Estimativa</button>
+
+            <div class="result-box" id="resultadoOrcamento">
+                Valor: ---
+            </div>
+
+            <!-- Botão adicional -->
+            <button onclick="checarPreInst()">Já tem pré‑instalação?</button>
+        </div>
+
+        <!-- Agendamento -->
+        <div class="card">
+            <h3><i class="fas fa-calendar-alt"></i> Agendamento</h3>
+            <p style="color:var(--text-gray);font-size:.9rem;">
+                Escolha a data e localize sua zona.
+            </p>
+
+            <label for="data">Data desejada:</label>
+            <input type="date" id="data_agendamento" required>
+
+            <!-- CP -->
+            <label for="postal">Código Postal (CP):</label>
+            <input type="text" id="postal" placeholder="Ex: 1000-001">
+
+            <!-- Botão para calcular distância -->
+            <button id="calcularDistanciaBtn" style="margin-top:10px;">
+                OK
+            </button>
+
+            <!-- Exibição da distância calculada -->
+            <span id="distancia-estimada"
+                  style="display:block;margin-top:8px;color:#b3b3b3;font-size:.9rem;">
+                (A distância será exibida aqui)
+            </span>
+
+            <!-- Campo oculto para armazenar o valor em km -->
+            <input type="hidden" id="distancia">
+
+            <button onclick="agendar()">Confirmar Agendamento</button>
+
+            <div class="result-box" id="resultadoAgendamento">
+                Aguardando dados...
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 TechVac - Todos os direitos reservados | Portugal</p>
+    <a href="https://wa.me/351937979193" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+    </a>
+</footer>
+
+<script>
+    /* ------------------------------------------------------------------ */
+    /*  Constante do CP base (oculto)                                     */
+    const BASE_CP = '2715-611';
+
+    /* ------------------------------------------------------------------ */
+    /*  Função que devolve as coordenadas (lat, lon) de um CP            */
+    async function getCoordinates(cp) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cp + ', Portugal')}`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Geocoding failed');
+        const data = await response.json();
+        if (data.length === 0) throw new Error('No results for ' + cp);
+        return {lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon)};
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Fórmula de haversine para distância entre duas coordenadas      */
+    function haversine(coord1, coord2) {
+        const R = 6371; // raio da Terra em km
+        const dLat = (coord2.lat - coord1.lat) * Math.PI / 180;
+        const dLon = (coord2.lon - coord1.lon) * Math.PI / 180;
+        const a =
+            Math.sin(dLat/2)**2 +
+            Math.cos(coord1.lat*Math.PI/180)*Math.cos(coord2.lat*Math.PI/180)*Math.sin(dLon/2)**2;
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c; // km
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Calcula a distância entre o CP base e o CP do cliente            */
+    async function computeDistance() {
+        const cpInput = document.getElementById('postal');
+        const cpValue = cpInput.value.trim();
+        if (!cpValue) return;
+
+        try {
+            const [baseCoord, clientCoord] = await Promise.all([
+                getCoordinates(BASE_CP),
+                getCoordinates(cpValue)
+            ]);
+
+            const distanceKm = haversine(baseCoord, clientCoord);
+
+            /* Atualiza os campos visuais e ocultos */
+            document.getElementById('distancia-estimada')
+                    .textContent = `${distanceKm.toFixed(2)} km`;
+            document.getElementById('distancia').value =
+                    Math.round(distanceKm * 100) / 100; // duas casas
+        } catch (e) {
+            console.error(e);
+            document.getElementById('distancia-estimada')
+                    .textContent = 'Distância indisponível';
+            document.getElementById('distancia').value = '';
+        }
+    }
+
+    /* Botão “OK” que dispara o cálculo da distância */
+    document
+        .getElementById('calcularDistanciaBtn')
+        .addEventListener('click', computeDistance);
+
+    /* ------------------------------------------------------------------ */
+    /*  Limita a entrada do campo "Metros de tubagem"                    */
+    const metrosInput = document.getElementById('metros');
+    metrosInput.addEventListener('input', function () {
+        // Remove tudo que não for dígito
+        this.value = this.value.replace(/[^0-9]/g, '');
+        // Trunca para 2 caracteres
+        if (this.value.length > 2) this.value = this.value.slice(0, 2);
+        // Se ultrapassar 25, corrige automaticamente
+        if (parseInt(this.value || '0', 10) > 25) this.value = '25';
+    });
+
+    /* ------------------------------------------------------------------ */
+    /*  Lógica do Pré‑Orçamento                                          */
+    function calcularOrcamento() {
+        const rawMetros = parseFloat(metrosInput.value) || 0; // já limitado
+        const btus = parseInt(document.getElementById('btus').value) || 0;
+
+        /* Preço por metro baseado na categoria de BTU */
+        let pricePerMeter;
+        if (btus <= 12000) {
+            pricePerMeter = 25;          // € por metro para ≤12k BTUs
+        } else if (btus <= 18000) {
+            pricePerMeter = 30;          // € por metro para ≤18k BTUs
+        } else {
+            pricePerMeter = 35;          // € por metro para >18k BTUs
+        }
+        const costTubagem = rawMetros * pricePerMeter;
+
+        /* Custo de instalação por unidade baseado na categoria de BTU */
+        let installationCost;
+        if (btus <= 12000) {
+            installationCost = 150;
+        } else if (btus <= 18000) {
+            installationCost = 180;
+        } else {
+            installationCost = 220;
+        }
+
+        const total = costTubagem + installationCost;
+
+        document.getElementById('resultadoOrcamento')
+                .innerHTML = `Estimativa: ${total.toFixed(2)}€`;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Botão “Já tem pré‑instalação?”                                    */
+    function checarPreInst() {
+        const has = confirm("Você já tem uma pré‑instalação? Se sim, clique OK para entrar em contato pelo WhatsApp.");
+        if (has) window.open('https://wa.me/351937979193', '_blank');
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Lógica de Agendamento                                            */
+    function agendar() {
+        const data = document.getElementById('data_agendamento').value;
+        const cp = document.getElementById('postal').value.trim();
+        const km = parseFloat(document.getElementById('distancia').value) || 0;
+
+        if (!data || !cp) {
+            alert("Por favor, preencha a data e o código postal.");
+            return;
+        }
+
+        // Cálculo da taxa de deslocação
+        const taxaDeslocacao = km * 0.70;   // €0,70 por KM rodado
+
+        document.getElementById('resultadoAgendamento')
+                .innerHTML =
+            `Data: ${data} <br> Distância: ${km.toFixed(2)} km <br> Taxa de Deslocação: ${taxaDeslocacao.toFixed(2)}€`;
+
+        console.log(`Agendamento solicitado para ${data} no CP ${cp} com taxa de €${taxaDeslocacao.toFixed(2)}`);
+    }
+</script>
+
+</body>
+</html>
+
